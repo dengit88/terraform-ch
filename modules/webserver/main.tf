@@ -1,6 +1,6 @@
 #resource "aws_security_group" "my-sg"
-resource "aws_default_security_group" "default-sg" {
-  # name = "my-sg"
+resource "aws_security_group" "my-sg" {
+  name = "my-sg"
   vpc_id = var.vpc_id
 
   ingress {
@@ -55,7 +55,7 @@ resource "aws_instance" "my-server" {
   ami                         = data.aws_ami.latest-image.id
   instance_type               = var.instance_type
   subnet_id                   = var.subnet_id     # module.subnet-modules.subnet.id
-  vpc_security_group_ids      = [aws_default_security_group.default-sg.id]
+  vpc_security_group_ids      = [aws_security_group.my-sg.id]
   availability_zone           = var.avail_zone
   associate_public_ip_address = true
   key_name                    = aws_key_pair.ssh-key.key_name
